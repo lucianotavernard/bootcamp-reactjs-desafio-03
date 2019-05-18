@@ -14,6 +14,8 @@ import UserPin from '../UserPin';
 
 class Map extends Component {
   state = {
+    mapboxApiAccessToken:
+      'pk.eyJ1IjoibHVjaWFub3RhdmVybmFyZCIsImEiOiJjanZuMTJzdGsxajZxNDN1aXZ1bjliYWZ2In0.RLhO0SUfDxfWNdfUUnoFLw',
     viewport: {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -29,6 +31,7 @@ class Map extends Component {
         PropTypes.shape({
           id: PropTypes.number,
           name: PropTypes.string,
+          username: PropTypes.string,
           avatar: PropTypes.string,
           coordenates: PropTypes.shape({
             latitude: PropTypes.number,
@@ -72,6 +75,8 @@ class Map extends Component {
 
     const username = window.prompt('Digite o username');
 
+    if (!username) return;
+
     addUserRequest({
       username,
       coordenates: {
@@ -82,7 +87,7 @@ class Map extends Component {
   };
 
   render() {
-    const { viewport } = this.state;
+    const { viewport, mapboxApiAccessToken } = this.state;
     const { users } = this.props;
 
     return (
@@ -91,7 +96,7 @@ class Map extends Component {
         mapStyle="mapbox://styles/mapbox/dark-v9"
         onClick={this.handleMapClick}
         onViewportChange={this.handleViewportChange}
-        mapboxApiAccessToken="pk.eyJ1IjoibHVjaWFub3RhdmVybmFyZCIsImEiOiJjanZuMTJzdGsxajZxNDN1aXZ1bjliYWZ2In0.RLhO0SUfDxfWNdfUUnoFLw"
+        mapboxApiAccessToken={mapboxApiAccessToken}
       >
         {users.data.map(user => (
           <Marker

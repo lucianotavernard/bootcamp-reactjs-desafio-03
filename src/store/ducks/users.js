@@ -33,7 +33,7 @@ export default function users(state = initalState, action) {
     case Types.REMOVE:
       return {
         ...state,
-        data: state.data.filter(user => user.id !== action.payload.user.id),
+        data: state.data.filter(user => user.id !== action.payload),
       };
     default:
       return state;
